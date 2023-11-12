@@ -23,6 +23,7 @@
 	}
 
 	function setup() {
+        const agent = new Agent({x: 0, y: 0});
 		const setupCode = '(environment) => {' + code + '\n}';
 		const setupFunction = eval(setupCode);
 
