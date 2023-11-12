@@ -40,6 +40,7 @@ export class Environment {
 export class Agent {
     position;
     visual;
+    size = 30;
     orientation = 0;
 
     /**

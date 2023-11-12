@@ -3,7 +3,7 @@
 </script>
 
 {#if agent.visual}
-	<image href={agent.visual} x={agent.position.x} y={agent.position.y} width="30" />
+	<image href={agent.visual} x={agent.position.x} y={agent.position.y} width={agent.size} />
 {:else}
 	<circle
 		cx={agent.position.x}
