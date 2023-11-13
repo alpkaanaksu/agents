@@ -24,10 +24,10 @@
 	}
 
 	function setup() {
-		const setupCode = '(environment, Agent, exposed) => {' + code + '\n}';
+		const setupCode = '(environment, Agent, Thing, exposed) => {' + code + '\n}';
 		const setupFunction = eval(setupCode);
 
-		setupFunction(environment, Agent, exposed);
+		setupFunction(environment, Agent, Thing, exposed);
 		ticks++;
 		exposed = exposed;
 	}

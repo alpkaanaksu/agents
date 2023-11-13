@@ -3,6 +3,7 @@ const randomNumber = (max) => Math.floor(Math.random() * max);
 export class Environment {
     dimensions;
     agents = [];
+    things = [];
     state = {};
     center;
     ticks = 0;
@@ -15,8 +16,14 @@ export class Environment {
         }
     }
 
-    add(agent) {
-        this.agents.push(agent);
+    add(obj) {
+        if (obj instanceof Agent) {
+            this.agents.push(obj);
+        }
+
+        if (obj instanceof Thing) {
+            this.things.push(obj);
+        }
     }
 
     randomPosition() {
@@ -84,6 +91,22 @@ export class Agent {
             y: Math.sin(radian)
         };
     }
+
+    die() {
+        this.alive = false;
+    }
+}
+
+export class Thing {
+    position;
+    visual;
+    color;
+    size;
+
+    constructor(position) {
+        this.position = position;
+    }
+
 }
 
 /**
