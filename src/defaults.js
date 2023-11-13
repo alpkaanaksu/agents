@@ -1,24 +1,14 @@
 export const sheepCode = `
-exposed.orientation = 0;
-exposed.speed = 0;
 
-class Sheep extends Agent {
-    constructor(position, orientation) {
-        super(position, orientation);
+exposed.foodDecreaseRate = 0.5;
+exposed.waterDecreaseRate = 0.5;
 
-        super.visual = "https://www.svgrepo.com/show/24608/sheep.svg";
-    }
+exposed.activeFoodDecreaseRate = 2;
+exposed.activeWaterDecreaseRate = 2;
 
-    tick() {
-        this.orientation = exposed.orientation;
-        this.go(exposed.speed);
-    }
-}
+exposed.eatingRate = 3;
+exposed.drinkingRate = 3;
 
-environment.add(new Sheep(environment.center, environment.randomOrientation()));
-`;
-
-export const herrErwin = `
 class Water extends Thing {
     constructor(position) {
         super(position);
@@ -66,7 +56,7 @@ class HerrErwin extends Agent {
     }
     
     eat() {
-        this.food += 2;
+        this.food += exposed.eatingRate;
         
         if (this.food > 100) {
             this.food = 100;
@@ -74,7 +64,7 @@ class HerrErwin extends Agent {
     }
     
     drink() {
-        this.water += 2;
+        this.water += exposed.drinkingRate;
         
         if (this.water > 100) {
             this.water = 100;
@@ -85,8 +75,8 @@ class HerrErwin extends Agent {
         this.right(10);
         this.go(20);
         
-        this.food--;
-        this.water--;
+        this.food -= exposed.foodDecreaseRate;
+        this.water -= exposed.waterDecreaseRate;
         
         if (this.food <= 0 || this.water <= 0) {
             this.die();
