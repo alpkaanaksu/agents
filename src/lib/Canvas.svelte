@@ -38,11 +38,11 @@
 		border-radius: 8px;
 		box-shadow: 0 0 8px #ccc;
 		box-sizing: border-box;
-		pointer-events: none;
 	}
 
 	.simulation {
 		position: relative;
+		pointer-events: none;
 	}
 
 	.info {
