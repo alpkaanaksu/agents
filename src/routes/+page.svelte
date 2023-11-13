@@ -80,19 +80,21 @@
 	<div class="simulation-display">
 		<div>
 			<div class="menu">
-				<button
-					on:click={() => {
-						reset();
-						setup();
-						ticks = 0;
-					}}>Setup</button
-				>
-				<button
-					class={running ? 'running' : 'frozen'}
-					on:click={() => {
-						toggle();
-					}}>{running ? 'Stop' : 'Run'}</button
-				>
+				<div>
+					<button
+						on:click={() => {
+							reset();
+							setup();
+							ticks = 0;
+						}}>Setup</button
+					>
+					<button
+						class={running ? 'running' : 'frozen'}
+						on:click={() => {
+							toggle();
+						}}>{running ? 'Stop' : 'Run'}</button
+					>
+				</div>
 
 				<span class="ticks">{ticks}</span>
 			</div>
@@ -168,7 +170,10 @@
 
 	.ticks {
 		margin-left: 1rem;
-        color: gray;
+		color: gray;
+        background-color: #efefef;
+        padding: 0.125rem 0.5rem;
+        border-radius: 99px;
 	}
 
 	.pill {
@@ -193,7 +198,10 @@
 		font-size: 10pt;
 	}
 
-    .menu {
-        margin-bottom: 16px;
-    }
+	.menu {
+		margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+	}
 </style>
