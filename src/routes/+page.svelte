@@ -6,9 +6,9 @@
 	import Canvas from '$lib/Canvas.svelte';
 	import { Environment, Agent, Thing } from '../agents';
 
-	import { sheepCode } from '../defaults';
+	import { herrErwin } from '../defaults';
 
-	let code = localStorage.getItem('code') ?? sheepCode;
+	let code = localStorage.getItem('code') ?? herrErwin;
 
 	const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
