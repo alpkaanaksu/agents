@@ -182,7 +182,6 @@
 	}
 
 	.pill label {
-		font-weight: bold;
 		margin-left: 0.5rem;
 	}
 
