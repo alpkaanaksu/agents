@@ -1,4 +1,7 @@
 export const sheepCode = `
+exposed.orientation = 0;
+exposed.speed = 0;
+
 class Sheep extends Agent {
     constructor(position, orientation) {
         super(position, orientation);
@@ -7,8 +10,8 @@ class Sheep extends Agent {
     }
 
     tick() {
-        this.right(0.3);
-        this.forward(30);
+        this.orientation = exposed.orientation;
+        this.forward(exposed.speed);
     }
 }
 
