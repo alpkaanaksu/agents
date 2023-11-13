@@ -8,9 +8,7 @@
 	<circle
 		cx={agent.position.x}
 		cy={agent.position.y}
-		r="5"
-		stroke="green"
-		stroke-width="1"
-		fill="yellow"
+		r={agent.size / 2}
+		fill="firebrick"
 	/>
 {/if}
