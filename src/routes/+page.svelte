@@ -7,13 +7,14 @@
 	import { Environment, Agent } from '../agents';
 
 	import { sheepCode } from '../defaults';
-	import { onMount } from 'svelte';
 
 	let code = sheepCode;
 
 	const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 	let environment = newEnvironment();
+
+	let exposed = {};
 
 	function newEnvironment() {
 		return new Environment({
@@ -23,11 +24,12 @@
 	}
 
 	function setup() {
-		const setupCode = '(environment, Agent) => {' + code + '\n}';
+		const setupCode = '(environment, Agent, exposed) => {' + code + '\n}';
 		const setupFunction = eval(setupCode);
 
-		setupFunction(environment, Agent);
+		setupFunction(environment, Agent, exposed);
 		ticks++;
+		exposed = exposed;
 	}
 
 	let ticks = 0;
@@ -72,9 +74,9 @@
 		<div>
 			<button
 				on:click={() => {
-                    reset();
+					reset();
 					setup();
-                    ticks = 0;
+					ticks = 0;
 				}}>Setup</button
 			>
 			<button
@@ -83,17 +85,24 @@
 					toggle();
 				}}>{running ? 'Stop' : 'Run'}</button
 			>
-			<button
-				on:click={reset}>Reset</button
-			>
+			<button on:click={reset}>Reset</button>
 
 			<span class="ticks">{ticks}</span>
 
 			<br /><br />
+			<div class="simulation-container">
+				<div class="exposed">
+					{#each Object.keys(exposed) as k}
+						<div class="pill">
+							<label>{k} <input type="number" bind:value={exposed[k]} /></label>
+						</div>
+					{/each}
+				</div>
 
-			{#key ticks}
-				<Canvas {environment} />
-			{/key}
+				{#key ticks}
+					<Canvas {environment} />
+				{/key}
+			</div>
 		</div>
 	</div>
 </div>
@@ -101,6 +110,7 @@
 <style>
 	:global(body) {
 		margin: 0;
+		font-family: sans-serif;
 	}
 
 	.main-container {
@@ -115,6 +125,16 @@
 		width: 50%;
 		padding: 16px;
 	}
+
+	.simulation-container {
+		position: relative;
+	}
+    
+    .exposed {
+        top: 16px;
+        left: 16px;
+        position: absolute;
+    }
 
 	button {
 		border-radius: 4px;
@@ -143,5 +163,28 @@
 		font-family: sans-serif;
 		font-size: 15pt;
 		margin-left: 1rem;
+	}
+
+	.pill {
+		border-radius: 99px;
+		background-color: #00000011;
+		padding: 0.5rem;
+		display: inline;
+		margin-bottom: 0.5rem;
+        margin-right: 0.5rem;
+	}
+
+	.pill label {
+		font-weight: bold;
+        margin-left: 0.5rem;
+	}
+
+	.pill input {
+		border-radius: 99px;
+		width: 40px;
+		margin-left: 0.5rem;
+		border: none;
+		padding: 0.25rem 0.5rem;
+		font-size: 10pt;
 	}
 </style>
