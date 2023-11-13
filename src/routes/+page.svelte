@@ -79,24 +79,25 @@
 
 	<div class="simulation-display">
 		<div>
-			<button
-				on:click={() => {
-					reset();
-					setup();
-					ticks = 0;
-				}}>Setup</button
-			>
-			<button
-				class={running ? 'running' : 'frozen'}
-				on:click={() => {
-					toggle();
-				}}>{running ? 'Stop' : 'Run'}</button
-			>
-			<button on:click={reset}>Reset</button>
+			<div class="menu">
+				<button
+					on:click={() => {
+						reset();
+						setup();
+						ticks = 0;
+					}}>Setup</button
+				>
+				<button
+					class={running ? 'running' : 'frozen'}
+					on:click={() => {
+						toggle();
+					}}>{running ? 'Stop' : 'Run'}</button
+				>
+				<button on:click={reset}>Reset</button>
 
-			<span class="ticks">{ticks}</span>
+				<span class="ticks">{ticks}</span>
+			</div>
 
-			<br /><br />
 			<div class="simulation-container">
 				<div class="exposed">
 					{#each Object.keys(exposed) as k}
@@ -193,4 +194,8 @@
 		padding: 0.25rem 0.5rem;
 		font-size: 10pt;
 	}
+
+    .menu {
+        margin-bottom: 16px;
+    }
 </style>
