@@ -46,14 +46,11 @@
 
 	.info {
 		position: absolute;
-		bottom: 0;
-		left: 0;
+		bottom: 8px;
+		left: 8px;
 		border-radius: 8px;
-		padding: 8px 16px;
-	}
-
-	.info div {
-		margin-bottom: 8px;
+		padding: 8px;
+		background-color: #00000011;
 	}
 
 </style>
