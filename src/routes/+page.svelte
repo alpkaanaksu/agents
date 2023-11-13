@@ -4,7 +4,7 @@
 	import 'brace/theme/chrome';
 
 	import Canvas from '$lib/Canvas.svelte';
-	import { Environment, Agent, Thing } from '../agents';
+	import { Environment, Agent, Thing, utils } from '../agents';
 
 	import { herrErwin } from '../defaults';
 
@@ -24,10 +24,10 @@
 	}
 
 	function setup() {
-		const setupCode = '(environment, Agent, Thing, exposed) => {' + code + '\n}';
+		const setupCode = '(environment, Agent, Thing, exposed, utils) => {' + code + '\n}';
 		const setupFunction = eval(setupCode);
 
-		setupFunction(environment, Agent, Thing, exposed);
+		setupFunction(environment, Agent, Thing, exposed, utils);
 		ticks++;
 		exposed = exposed;
 	}

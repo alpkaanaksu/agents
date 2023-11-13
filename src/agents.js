@@ -111,6 +111,15 @@ export class Thing {
 
 }
 
+export const utils = {
+    random: (lower, upper) => {
+        return lower + randomNumber(upper-lower);
+    },
+    randomBoolean: (p) => {
+        return randomNumber(100) <= p;
+    }
+}
+
 /**
  * 
  * @param {string} url 
