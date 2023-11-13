@@ -4,11 +4,11 @@
 	import 'brace/theme/chrome';
 
 	import Canvas from '$lib/Canvas.svelte';
-	import { Environment, Agent } from '../agents';
+	import { Environment, Agent, Thing } from '../agents';
 
 	import { sheepCode } from '../defaults';
 
-	let code = sheepCode;
+	let code = localStorage.getItem('code') ?? sheepCode;
 
 	const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -45,22 +45,29 @@
 
 		while (running) {
 			ticks++;
-			environment.agents.forEach((agent) => agent.tick());
+			environment.agents.forEach((agent) => {
+				if (agent.alive) {
+					agent.tick();
+				}
+			});
 			await sleep(50);
 		}
 	}
 
 	function reset() {
 		running = false;
+		exposed = {};
 		environment = newEnvironment();
 		ticks = 0;
 	}
+
+	$: localStorage.setItem('code', code);
 </script>
 
 <div class="main-container">
 	<div class="code-editor">
 		<AceEditor
-			value={sheepCode}
+			value={code}
 			width="100%"
 			height="100vh"
 			lang="javascript"
@@ -129,12 +136,12 @@
 	.simulation-container {
 		position: relative;
 	}
-    
-    .exposed {
-        top: 16px;
-        left: 16px;
-        position: absolute;
-    }
+
+	.exposed {
+		top: 8px;
+		left: 8px;
+		position: absolute;
+	}
 
 	button {
 		border-radius: 4px;
@@ -168,15 +175,15 @@
 	.pill {
 		border-radius: 99px;
 		background-color: #00000011;
-		padding: 0.5rem;
-		display: inline;
+		padding: 0.25rem;
+		display: inline-block;
 		margin-bottom: 0.5rem;
-        margin-right: 0.5rem;
+		margin-right: 0.5rem;
 	}
 
 	.pill label {
 		font-weight: bold;
-        margin-left: 0.5rem;
+		margin-left: 0.5rem;
 	}
 
 	.pill input {

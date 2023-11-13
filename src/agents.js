@@ -47,8 +47,10 @@ export class Environment {
 export class Agent {
     position;
     visual;
+    color;
     size = 30;
     orientation = 0;
+    alive = true;
 
     /**
      * 
@@ -77,7 +79,7 @@ export class Agent {
         }
     }
 
-    forward(units) {
+    go(units) {
         const unit = this.unit();
         
         this.position.x += units * unit.x;
