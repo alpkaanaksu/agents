@@ -93,7 +93,6 @@
 						toggle();
 					}}>{running ? 'Stop' : 'Run'}</button
 				>
-				<button on:click={reset}>Reset</button>
 
 				<span class="ticks">{ticks}</span>
 			</div>
@@ -168,9 +167,8 @@
 	}
 
 	.ticks {
-		font-family: sans-serif;
-		font-size: 15pt;
 		margin-left: 1rem;
+        color: gray;
 	}
 
 	.pill {
