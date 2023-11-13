@@ -78,9 +78,10 @@ export class Agent {
     }
 
     unit() {
+        const radian = this.orientation * (Math.PI / 180);
         return {
-            x: Math.cos(this.orientation),
-            y: Math.sin(this.orientation)
+            x: Math.cos(radian),
+            y: Math.sin(radian)
         };
     }
 }
