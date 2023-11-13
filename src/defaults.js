@@ -1,4 +1,24 @@
 export const sheepCode = `
+exposed.orientation = 0;
+exposed.speed = 0;
+
+class Sheep extends Agent {
+    constructor(position, orientation) {
+        super(position, orientation);
+
+        super.visual = "https://www.svgrepo.com/show/24608/sheep.svg";
+    }
+
+    tick() {
+        this.orientation = exposed.orientation;
+        this.go(exposed.speed);
+    }
+}
+
+environment.add(new Sheep(environment.center, environment.randomOrientation()));
+`;
+
+export const herrErwin = `
 
 exposed.foodDecreaseRate = 0.5;
 exposed.waterDecreaseRate = 0.5;
@@ -95,4 +115,5 @@ environment.add(new Food({
     x: environment.center.x - 300,
     y: environment.center.y
 }));
+
 `;
