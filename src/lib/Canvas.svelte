@@ -42,7 +42,7 @@
 			</g>
 		{/each}
 	</svg>
-	{#if currentObject}
+	{#if currentObject && currentObject.constructor.name != "Object"}
 		<div class="info">
 			<b>{currentObject.constructor.name}</b> • {getAllPrototypes(currentObject).join(" • ")}
 			<br /><br />
@@ -71,7 +71,8 @@
 		left: 8px;
 		border-radius: 8px;
 		padding: 8px;
-		background-color: #00000011;
+		color: white;
+		background-color: #00000099;
 	}
 
 	g {
