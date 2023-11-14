@@ -18,11 +18,22 @@ export class Environment {
     }
 
     add(obj) {
-        if (obj instanceof Agent) {
+        if (typeof (obj) === "function") {
+            try {
+                this.add(new obj(this.randomPosition(), this.randomOrientation()));
+            } catch (err) {
+                // verify err is the expected error and then
+                if (err.message.indexOf('is not a constructor') >= 0) {
+                    this.add(obj());
+                }
+            }
+        }
+
+        else if (obj instanceof Agent) {
             this.agents.push(obj);
         }
 
-        if (obj instanceof Thing) {
+        else if (obj instanceof Thing) {
             this.things.push(obj);
         }
     }
@@ -39,8 +50,8 @@ export class Environment {
     }
 
     addMultiple(n, creator) {
-        for(let i = 0; i < n; i++) {
-            this.add(creator());
+        for (let i = 0; i < n; i++) {
+            this.add(creator);
         }
     }
 
@@ -96,9 +107,9 @@ export class Agent {
 
     go(units) {
         const unit = this.unit();
-        
+
         this.position.x += units * unit.x;
-        this.position.y += units * unit.y; 
+        this.position.y += units * unit.y;
     }
 
     unit() {
@@ -128,7 +139,7 @@ export class Thing {
 
 export const utils = {
     random: (lower, upper) => {
-        return lower + randomNumber(upper-lower);
+        return lower + randomNumber(upper - lower);
     },
     randomBoolean: (p) => {
         return randomNumber(100) <= p;
