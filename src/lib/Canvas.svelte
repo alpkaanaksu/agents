@@ -44,7 +44,7 @@
 	</svg>
 	{#if currentObject}
 		<div class="info">
-			<b>{currentObject.constructor.name}</b> ({getAllPrototypes(currentObject).join(" : ")})
+			<b>{currentObject.constructor.name}</b> • {getAllPrototypes(currentObject).join(" • ")}
 			<br /><br />
 			{#each Object.entries(currentObject).filter((x) => x[1]) as entry}
 				<div><b>{entry[0]}:</b> {JSON.stringify(entry[1])}</div>
