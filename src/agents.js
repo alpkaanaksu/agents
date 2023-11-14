@@ -7,6 +7,7 @@ export class Environment {
     state = {};
     center;
     ticks = 0;
+    tickEvents = [];
 
     constructor(dimensions) {
         this.dimensions = dimensions;
@@ -41,6 +42,20 @@ export class Environment {
         for(let i = 0; i < n; i++) {
             this.add(creator());
         }
+    }
+
+    tick() {
+        this.agents.forEach((agent) => {
+            if (agent.alive) {
+                agent.tick();
+            }
+        });
+
+        this.tickEvents.forEach(event => event());
+    }
+
+    atTick(event) {
+        this.tickEvents.push(event);
     }
 }
 

@@ -45,11 +45,7 @@
 
 		while (running) {
 			ticks++;
-			environment.agents.forEach((agent) => {
-				if (agent.alive) {
-					agent.tick();
-				}
-			});
+			environment.tick();
 			await sleep(50);
 		}
 	}
