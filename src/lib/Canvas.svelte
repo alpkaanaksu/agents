@@ -6,6 +6,24 @@
 	export let environment;
 
 	let currentObject = {};
+
+	const getAllPrototypes = (obj) => {
+		const prototypes = [];
+
+		let current = Object.getPrototypeOf(obj);
+
+		while (true) {
+			current = Object.getPrototypeOf(current);
+
+			if(current === null || current.constructor.name === "Object") {
+				break;
+			}
+
+			prototypes.push(current.constructor.name);
+		}
+
+		return prototypes;
+	};
 </script>
 
 <div class="simulation">
@@ -26,7 +44,9 @@
 	</svg>
 	{#if currentObject}
 		<div class="info">
-			{#each Object.entries(currentObject) as entry}
+			<b>{currentObject.constructor.name}</b> ({getAllPrototypes(currentObject).join(" : ")})
+			<br /><br />
+			{#each Object.entries(currentObject).filter((x) => x[1]) as entry}
 				<div><b>{entry[0]}:</b> {JSON.stringify(entry[1])}</div>
 			{/each}
 		</div>
