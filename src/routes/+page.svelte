@@ -6,13 +6,12 @@
 	import Canvas from '$lib/Canvas.svelte';
 	import { Environment, Agent, Thing } from '../agents';
 
-	import { herrErwin } from '../defaults';
 	import { onMount } from 'svelte';
 
     let topBar;
 
 	let code = localStorage.getItem('code');
-	let githubPath = 'alpkaanaksu/agents/main/models/sheep_basic.js';
+	let githubPath = code ? '' : 'alpkaanaksu/agents/main/models/sheep_basic.js';
 
 	function fetchCode() {
 		const url = `https://raw.githubusercontent.com/${githubPath}`;
@@ -85,6 +84,11 @@
 			<input bind:value={githubPath} type="text" placeholder="GitHub Path" /><button
 				on:click={fetchCode}>Fetch</button
 			>
+
+            <button on:click={() => {
+                githubPath = "";
+                code = "";
+            }}>New</button>
 		</div>
         {#if topBar}
             <AceEditor
@@ -177,7 +181,7 @@
 
 	.top input {
 		border-radius: 99px;
-		padding: 0.25rem 0.5rem;
+		padding: 0.125rem 1rem;
 		font-size: 11pt;
 		border: none;
 		background-color: #ffffff22;
