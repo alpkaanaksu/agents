@@ -1,6 +1,27 @@
-const randomNumber = (max) => Math.floor(Math.random() * max);
+import { alea } from "seedrandom";
+
+class Utils {
+    prng = new alea(Math.random().toString());
+
+    setSeed(seed) {
+        this.prng = new alea(seed);
+    }
+
+    randomNumber(max) {
+        return Math.floor(this.prng() * max);
+    }
+
+    random(lower, upper) {
+        return lower + this.randomNumber(upper - lower + 1);
+    }
+
+    p(probability) {
+        return this.random(0, 100) <= probability;
+    }
+}
 
 export class Environment {
+    utils = new Utils();
     dimensions;
     agents = [];
     things = [];
@@ -20,11 +41,11 @@ export class Environment {
     addOne(obj) {
         if (typeof (obj) === "function") {
             try {
-                this.add(new obj(this.randomPosition(), this.randomOrientation()));
+                this.addOne(new obj(this.randomPosition(), this.randomOrientation()));
             } catch (err) {
                 // verify err is the expected error and then
                 if (err.message.indexOf('is not a constructor') >= 0) {
-                    this.add(obj());
+                    this.addOne(obj());
                 }
             }
         }
@@ -40,13 +61,13 @@ export class Environment {
 
     randomPosition() {
         return {
-            x: randomNumber(this.dimensions.x),
-            y: randomNumber(this.dimensions.y),
+            x: this.utils.random(0, this.dimensions.x),
+            y: this.utils.random(0, this.dimensions.y),
         };
     }
 
     randomOrientation() {
-        return randomNumber(360);
+        return this.utils.randomNumber(360);
     }
 
     add(n, creator) {
@@ -135,13 +156,4 @@ export class Thing {
         this.position = position;
     }
 
-}
-
-export const utils = {
-    random: (lower, upper) => {
-        return lower + randomNumber(upper - lower + 1);
-    },
-    randomBoolean: (p) => {
-        return randomNumber(100) <= p;
-    }
 }
