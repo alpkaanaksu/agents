@@ -17,7 +17,7 @@ export class Environment {
         }
     }
 
-    add(obj) {
+    addOne(obj) {
         if (typeof (obj) === "function") {
             try {
                 this.add(new obj(this.randomPosition(), this.randomOrientation()));
@@ -49,9 +49,9 @@ export class Environment {
         return randomNumber(360);
     }
 
-    addMultiple(n, creator) {
+    add(n, creator) {
         for (let i = 0; i < n; i++) {
-            this.add(creator);
+            this.addOne(creator);
         }
     }
 
