@@ -55,9 +55,9 @@
 
 <style>
 	#environment {
-		border-radius: 8px;
-		box-shadow: 0 0 6px #ccc;
+		background-color: #fbfbfb;
 		box-sizing: border-box;
+		border-left: 1px solid lightgray;
 	}
 
 	.simulation {
