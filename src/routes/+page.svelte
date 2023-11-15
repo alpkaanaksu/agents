@@ -24,7 +24,7 @@
 	}
 
 	function setup() {
-		const setupCode = '(environment, Agent, Thing, exposed, utils) => {' + code + '\n}';
+		const setupCode = '(env, Agent, Thing, exposed, utils) => {' + code + '\n}';
 		const setupFunction = eval(setupCode);
 
 		setupFunction(environment, Agent, Thing, exposed, utils);
