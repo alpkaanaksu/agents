@@ -3,7 +3,7 @@ exposed.step = 5;
 
 // Set seed for reproducibility
 // Avoid when doing multiple runs!
-utils.setSeed("ABM")
+utils.setSeed("agent based models")
 
 class Food extends Thing {
     nutritionalValue = 1;
