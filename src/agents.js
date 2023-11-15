@@ -86,7 +86,7 @@ export class Environment {
         this.tickEvents.forEach(event => event());
     }
 
-    atTick(event) {
+    onTick(event) {
         this.tickEvents.push(event);
     }
 }
