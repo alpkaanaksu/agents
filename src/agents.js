@@ -139,21 +139,9 @@ export class Thing {
 
 export const utils = {
     random: (lower, upper) => {
-        return lower + randomNumber(upper - lower);
+        return lower + randomNumber(upper - lower + 1);
     },
     randomBoolean: (p) => {
         return randomNumber(100) <= p;
     }
-}
-
-/**
- * 
- * @param {string} url 
- * @returns {string} svg
- */
-export const svgFromUrl = async (url) => {
-    const request = fetch(url);
-    const svg = (await request).text();
-
-    return svg;
 }
