@@ -3,8 +3,8 @@ import { alea } from "seedrandom";
 class Utils {
     prng = new alea(Math.random().toString());
 
-    setSeed(seed) {
-        this.prng = new alea(seed);
+    seed(s) {
+        this.prng = new alea(s);
     }
 
     randomNumber(max) {
