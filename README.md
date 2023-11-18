@@ -2,5 +2,6 @@ Experimenting with something similar to NetLogo in JavaScript (after realizing h
 
 
 
-https://github.com/alpkaanaksu/agents/assets/68744864/23044f23-1723-4b10-b69f-92c5a3b8dcea
+https://github.com/alpkaanaksu/agents/assets/68744864/56feec75-2367-41f1-ba9d-6bed4da3ac86
+
 
