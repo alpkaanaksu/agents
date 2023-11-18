@@ -7,8 +7,9 @@
 	import { Environment, Agent, Thing } from '../agents';
 
 	import { onMount } from 'svelte';
+	import LinePlot from '../lib/visualization/LinePlot.svelte';
 
-    let topBar;
+	let topBar;
 
 	let code = localStorage.getItem('code');
 	let githubPath = code ? '' : 'alpkaanaksu/agents/main/models/sheep_basic.js';
@@ -70,37 +71,56 @@
 
 	$: localStorage.setItem('code', code);
 
-    onMount(() => {
-        if (!code) {
-            fetchCode();
-        }
-        environment = newEnvironment();
-    })
+	onMount(() => {
+		if (!code) {
+			fetchCode();
+		}
+		environment = newEnvironment();
+	});
 </script>
 
 <div class="main-container">
-	<div class="code-editor">
+	<div class="meta">
 		<div class="top">
-			<input bind:value={githubPath} type="text" placeholder="GitHub Path" /><button
-				on:click={fetchCode}>Fetch</button
-			>
+			{#if !running}
+				<input bind:value={githubPath} type="text" placeholder="GitHub Path" /><button
+					on:click={fetchCode}>Fetch</button
+				>
 
-            <button on:click={() => {
-                githubPath = "";
-                code = "";
-            }}>New</button>
+				<button
+					on:click={() => {
+						githubPath = '';
+						code = '';
+					}}>New</button
+				>
+			{:else}
+				<p>Information</p>
+			{/if}
 		</div>
-        {#if topBar}
-            <AceEditor
-                value={code}
-                width="100%"
-                height="{visualViewport.height - topBar.clientHeight}px"
-                lang="javascript"
-                on:input={(obj) => {
-                    code = obj.detail;
-                }}
-            />
-        {/if}
+		{#if !running}
+			{#if topBar}
+				<AceEditor
+					value={code}
+					width="100%"
+					height="{visualViewport.height - topBar.clientHeight}px"
+					lang="javascript"
+					on:input={(obj) => {
+						code = obj.detail;
+					}}
+				/>
+			{/if}
+		{:else}
+			<div class="data">
+				{#key ticks}
+					{#each Object.keys(environment.track) as k}
+					<div>
+						<p class="pill"><b>{k}:</b> {environment.track[k]()}</p><br>
+						<LinePlot data={environment.tracked[k]} width={300} height={225}/>
+					</div>
+					{/each}
+				{/key}
+			</div>
+		{/if}
 	</div>
 
 	<div class="simulation-display">
@@ -122,19 +142,18 @@
 							}}>Setup</button
 						>
 					</div>
-                    <span class="ticks">{ticks}</span>
+					<span class="ticks">{ticks}</span>
 				</div>
 			</div>
 
-            
 			<div class="simulation-container">
-                {#if environment}
-                    {#key ticks}
-                        <Canvas {environment} />
-                    {/key}
-                {/if}
+				{#if environment}
+					{#key ticks}
+						<Canvas {environment} />
+					{/key}
+				{/if}
 
-                <div class="exposed">
+				<div class="exposed">
 					{#each Object.keys(exposed) as k}
 						<div class="pill">
 							<label>{k} <input type="number" bind:value={exposed[k]} /></label>
@@ -150,14 +169,14 @@
 	:global(body) {
 		margin: 0;
 		font-family: sans-serif;
-        overflow: hidden;
+		overflow: hidden;
 	}
 
 	.main-container {
 		display: flex;
 	}
 
-	.code-editor {
+	.meta {
 		width: 50%;
 	}
 
@@ -176,12 +195,13 @@
 		color: #efefef;
 		display: flex;
 		box-sizing: border-box;
+		align-items: center;
 		height: 48px;
 	}
 
 	.top input {
 		border-radius: 99px;
-		padding: 0.125rem 1rem;
+		padding: 0.5rem 1rem;
 		font-size: 11pt;
 		border: none;
 		background-color: #ffffff22;
@@ -215,7 +235,7 @@
 		font-size: 12pt;
 		cursor: pointer;
 		transition-duration: 200ms;
-        padding: 0.125rem 0.5rem;
+		padding: 0.125rem 0.5rem;
 	}
 
 	button.running {
@@ -275,8 +295,18 @@
 		justify-content: space-between;
 		width: 50%;
 		margin: 0 auto;
-        background-color: #ffffff22;
-        border-radius: 99px;
-        padding: 6px;
+		background-color: #ffffff22;
+		border-radius: 99px;
+		padding: 6px;
+	}
+
+	.data {
+		overflow: auto;
+		padding: 16px;
+		display: flex;
+	}
+
+	.data .pill {
+		padding: 0.25rem 0.5rem;
 	}
 </style>

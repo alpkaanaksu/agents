@@ -29,6 +29,8 @@ export class Environment {
     center;
     ticks = 0;
     tickEvents = [];
+    track = [];
+    tracked = [];
 
     constructor(dimensions) {
         this.dimensions = dimensions;
@@ -84,10 +86,25 @@ export class Environment {
         });
 
         this.tickEvents.forEach(event => event());
+
+        for (let key in this.track) {
+            if (this.tracked[key] === undefined) {
+                this.tracked[key] = [];
+            }
+            
+            this.tracked[key].push(this.track[key]());
+        }
     }
 
     onTick(event) {
         this.tickEvents.push(event);
+    }
+
+    all(constructor) {
+        const agents = this.agents.filter((agent) => agent instanceof constructor);
+        const things = this.things.filter((thing) => thing instanceof constructor);
+
+        return agents.concat(things);
     }
 }
 
